@@ -17,7 +17,7 @@ const ContactsArea = (props) => {
       case "myProfile":
         return <MyProfile />;
       case "myContacts":
-        return <MyContacts setCurrentChatId={props.setCurrentChatId} />;
+        return <MyContacts setCurrentChat={props.setCurrentChat} />;
     }
   };
   return (
@@ -27,9 +27,14 @@ const ContactsArea = (props) => {
           className="w-10 h-10 rounded-full mr-auto"
           src={auth?.photoUrl?.length > 0 ? auth.photoUrl : profilePlaceholder}
           alt="image"
+          onClick={() => setCurrentPage("myProfile")}
         />
         <div className="w-8 h-8 flex">
-          <img src={contactSvg} atl="contactSvg" />
+          <img
+            src={contactSvg}
+            atl="contactSvg"
+            onClick={() => setCurrentPage("myContacts")}
+          />
         </div>
       </div>
       {renderCurrentPage(currentPage)}

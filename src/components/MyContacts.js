@@ -30,7 +30,7 @@ const MyContacts = (props) => {
             });
 
             if (chat.length > 0) {
-              props.setCurrentChatId(chat[0].chatId);
+              props.setCurrentChat(chat[0]);
             } else {
               let generatedChatId = uuid();
               // init chat of currentuser's side
@@ -57,7 +57,10 @@ const MyContacts = (props) => {
                       lastUpdate: Date.now(),
                     })
                     .then((res) => {
-                      props.setCurrentChatId(generatedChatId);
+                      props.setCurrentChat({
+                        uid: contact.uid,
+                        chatId: generatedChatId,
+                      });
                     });
                 });
               // init chat on friend's side
@@ -200,7 +203,7 @@ const MyContacts = (props) => {
             <input
               type="email"
               value={email}
-              class="w-full mt-4 mb-4 pl-3 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+              class="w-full mt-4 mb-4 pl-3 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-green-500"
               placeholder="Search using email"
               onChange={(e) => {
                 setEmail(e.target.value);
