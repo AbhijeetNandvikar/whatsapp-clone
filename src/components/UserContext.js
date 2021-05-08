@@ -14,27 +14,37 @@ export const UserContext = (props) => {
   };
   const reject = () => {
     setAuth(null);
-    redirect("login");
+    // redirect("login");
   };
   const resolve = (data) => {
     console.log(data);
     fireStoreRef()
       .collection("users")
       .doc(data.uid)
-      .get()
-      .then((doc) => {
+      .onSnapshot((doc) => {
+        console.log(doc.exists);
         if (doc.exists) {
           setAuth(doc.data());
         } else {
-          setAuth({
+          let userData = {
             name: data.displayName,
             email: data.email,
             photoUrl: data.photoURL,
             emailVerified: data.emailVerified,
             uid: data.uid,
-            images: data?.images?.length ? data.images : [],
-            bio: data.bio ? data.bio : "",
-          });
+            contacts: [],
+            chats: [],
+            status: "Hi, there nice too meet you!",
+          };
+          setAuth(userData);
+          fireStoreRef()
+            .collection("users")
+            .doc(data.uid)
+            .set(userData)
+            .then((res) => {
+              console.log("new user data added to db");
+            })
+            .catch((err) => console.log(err));
         }
       });
 
@@ -47,22 +57,10 @@ export const UserContext = (props) => {
         console.log("user signed in");
         resolve(firebase.auth().currentUser);
       } else {
-        // No user is signed in
         reject();
         console.log("user logged out");
       }
     });
-  }, []);
-
-  React.useEffect(() => {
-    if (auth !== null) {
-      fireStoreRef()
-        .collection("user")
-        .doc(auth.uid)
-        .onSnapshot((doc) => {
-          setAuth(doc.data());
-        });
-    }
   }, []);
 
   return (

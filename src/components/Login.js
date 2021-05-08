@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { googlesigninwrapper, loginWrapper } from "../firebase";
+import { googlesigninwrapper, loginWrapper, logoutWrapper } from "../firebase";
 import { globalStore } from "./UserContext";
 import { Link, useHistory } from "react-router-dom";
 const Login = (props) => {
@@ -93,6 +93,18 @@ const Login = (props) => {
                     class="block w-full max-w-xs mx-auto text-indigo-500 border-indigo-700 border-2 rounded-lg px-3 py-3 font-semibold"
                   >
                     Continue with Google
+                  </button>
+                </div>
+              </div>
+              <div class="flex -mx-3">
+                <div class="w-full px-3 mb-5">
+                  <button
+                    onClick={() => {
+                      logoutWrapper();
+                    }}
+                    class="block w-full max-w-xs mx-auto text-indigo-500 border-indigo-700 border-2 rounded-lg px-3 py-3 font-semibold"
+                  >
+                    logout
                   </button>
                 </div>
               </div>
