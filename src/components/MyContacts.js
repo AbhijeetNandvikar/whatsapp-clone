@@ -2,7 +2,9 @@ import React, { useContext, useState, useEffect } from "react";
 import { fireStoreRef } from "../firebase";
 import { globalStore } from "./UserContext";
 import profilePlaceholder from "../images/profilePlaceholder.png";
-const MyContacts = () => {
+import { uuid } from "uuidv4";
+
+const MyContacts = (props) => {
   const { auth } = useContext(globalStore);
   const [contacts, setContacts] = useState([]);
   const [email, setEmail] = useState([]);
@@ -21,6 +23,58 @@ const MyContacts = () => {
         <div
           key={index}
           class="px-4 py-4 flex bg-grey-light cursor-pointer border-b border-grey-lighter"
+          onClick={() => {
+            // find out if we have generated chatId for current chat or not (determine wether this is first time chat or not)
+            let chat = auth.contacts.filter((obj) => {
+              return obj.uid === contact.uid;
+            });
+
+            if (chat.length > 0) {
+              props.setCurrentChatId(chat[0].chatId);
+            } else {
+              let generatedChatId = uuid();
+              // init chat of currentuser's side
+              fireStoreRef()
+                .collection("users")
+                .doc(auth.uid)
+                .update({
+                  chats: [
+                    ...auth.chats,
+                    {
+                      uid: contact.uid,
+                      chatId: generatedChatId,
+                    },
+                  ],
+                })
+                .then((res) => {
+                  // create new doc in chats collection
+                  fireStoreRef()
+                    .collection("chats")
+                    .doc(generatedChatId)
+                    .set({
+                      subscribers: [auth.uid, contact.uid],
+                      messages: [],
+                      lastUpdate: Date.now(),
+                    })
+                    .then((res) => {
+                      props.setCurrentChatId(generatedChatId);
+                    });
+                });
+              // init chat on friend's side
+              fireStoreRef()
+                .collection("users")
+                .doc(contact.uid)
+                .update({
+                  chats: [
+                    ...auth.chats,
+                    {
+                      uid: auth.uid,
+                      chatId: generatedChatId,
+                    },
+                  ],
+                });
+            }
+          }}
         >
           <div>
             <img

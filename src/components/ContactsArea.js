@@ -9,7 +9,7 @@ import contactSvg from "../images/contactSvg.svg";
 const ContactsArea = (props) => {
   const { auth, setAuth } = useContext(globalStore);
 
-  const [currentPage, setCurrentPage] = useState("myProfile");
+  const [currentPage, setCurrentPage] = useState("myContacts");
   const renderCurrentPage = (page) => {
     switch (page) {
       case "activeChats":
@@ -17,7 +17,7 @@ const ContactsArea = (props) => {
       case "myProfile":
         return <MyProfile />;
       case "myContacts":
-        return <MyContacts />;
+        return <MyContacts setCurrentChatId={props.setCurrentChatId} />;
     }
   };
   return (
