@@ -25,7 +25,7 @@ const MyContacts = (props) => {
           class="px-4 py-4 flex bg-grey-light cursor-pointer border-b border-grey-lighter"
           onClick={() => {
             // find out if we have generated chatId for current chat or not (determine wether this is first time chat or not)
-            let chat = auth.contacts.filter((obj) => {
+            let chat = auth.chats.filter((obj) => {
               return obj.uid === contact.uid;
             });
 
