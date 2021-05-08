@@ -86,9 +86,6 @@ const ChatWindow = (props) => {
       });
   };
 
-  const showFriendProfile = () => {
-    return <></>;
-  };
   return (
     <div className="w-full h-full flex flex-col border border-gray-200">
       <div className="flex items-center w-full bg-gray-100 px-4 py-3">
@@ -99,11 +96,11 @@ const ChatWindow = (props) => {
               ? props?.friendInfo?.photoUrl
               : profilePlaceholder
           }
-          onClick={() => showFriendProfile()}
+          onClick={() => setShowProfile(true)}
         />
         <div
           className="font-semibold ml-4 mr-auto"
-          onClick={() => showFriendProfile()}
+          onClick={() => setShowProfile(true)}
         >
           {props?.friendInfo?.name}
         </div>
@@ -125,6 +122,40 @@ const ChatWindow = (props) => {
           Send
         </button>
       </div>
+      {showProfile ? (
+        <div className="absolute top-0 right-0 z-30 bg-gray-600 bg-opacity-30 w-screen h-screen flex items-center justify-center">
+          <div className="lg:w-96 bg-white flex flex-col items-center px-4 py-4">
+            <img
+              className="lg:w-28 lg:h-28 rounded-full mt-8 mb-4 object-cover"
+              src={props.friendInfo.photoUrl}
+            />
+            <div className="flex flex-col w-full ">
+              <div className="w-full px-3 mb-4">
+                <label for="" className="text-xs font-semibold px-1">
+                  Name
+                </label>
+                <div className="flex">{props.friendInfo.name}</div>
+              </div>
+              <div className="w-full px-3 mb-4">
+                <label for="" className="text-xs font-semibold px-1">
+                  Status
+                </label>
+                <div className="flex">{props.friendInfo.status}</div>
+              </div>
+            </div>
+            <div className="px-3 w-full mt-4">
+              <button
+                className="px-3 py-3 bg-green-500 hover:bg-green-600 rounded font-bold text-white w-full"
+                onClick={() => setShowProfile(false)}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
