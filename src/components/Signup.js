@@ -12,9 +12,9 @@ const Signup = () => {
     <div className="min-w-screen min-h-screen">
       <div className=" lg:max-w-4xl mx-auto flex flex-col items-center justify-center mt-20 px-5 py-5">
         <div className="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden md:flex">
-          <div className="hidden w-1/2 bg-indigo-500 py-10 px-10 md:flex flex-col justify-center">
+          <div className="hidden w-1/2 bg-green-500 py-10 px-10 md:flex flex-col justify-center">
             <div className="text-4xl font-bold mb-12 text-white text-center flex justify-center items-center">
-              <div>Showcase your Art on PIXEL</div>
+              <div>Connect with people on Whatsapp!</div>
             </div>
             <Link to="/login" className="text-white mt-6 text-center">
               Click here to Login.
@@ -35,7 +35,7 @@ const Signup = () => {
                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"></div>
                     <input
                       type="text"
-                      class="w-full -ml-10 pl-3 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                      class="w-full -ml-10 pl-3 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-green-500"
                       placeholder="John Doe"
                       value={name}
                       onChange={(e) => {
@@ -54,7 +54,7 @@ const Signup = () => {
                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"></div>
                     <input
                       type="email"
-                      class="w-full -ml-10 pl-3 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                      class="w-full -ml-10 pl-3 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-green-500"
                       placeholder="johnsmith@example.com"
                       value={email}
                       onChange={(e) => {
@@ -73,7 +73,7 @@ const Signup = () => {
                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"></div>
                     <input
                       type="password"
-                      class="w-full -ml-10 pl-3 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                      class="w-full -ml-10 pl-3 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-green-500"
                       placeholder="************"
                       value={password}
                       onChange={(e) => {
@@ -92,7 +92,7 @@ const Signup = () => {
                     <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"></div>
                     <input
                       type="password"
-                      class="w-full -ml-10 pl-3 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                      class="w-full -ml-10 pl-3 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-green-500"
                       placeholder="************"
                       value={confirmPassword}
                       onChange={(e) => {
@@ -108,7 +108,7 @@ const Signup = () => {
               <div class="flex -mx-3">
                 <div class="w-full px-3 mb-5">
                   <button
-                    class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold"
+                    class="block w-full max-w-xs mx-auto bg-green-500 hover:bg-green-700 focus:bg-green-700 text-white rounded-lg px-3 py-3 font-semibold"
                     onClick={(e) => {
                       if (password === confirmPassword)
                         signUpWrapper(email, password, undefined, (err) => {
@@ -123,7 +123,7 @@ const Signup = () => {
               <div class="flex -mx-3">
                 <div class="w-full px-3 mb-5">
                   <button
-                    class="block w-full max-w-xs mx-auto text-indigo-500 border-indigo-700 border-2 rounded-lg px-3 py-3 font-semibold"
+                    class="block w-full max-w-xs mx-auto text-green-500 border-green-700 border-2 rounded-lg px-3 py-3 font-semibold"
                     onClick={() => {
                       googlesigninwrapper();
                     }}

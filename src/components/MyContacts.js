@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { fireStoreRef } from "../firebase";
+import { fireStoreRef, logoutWrapper } from "../firebase";
 import { globalStore } from "./UserContext";
 import profilePlaceholder from "../images/profilePlaceholder.png";
 import { uuid } from "uuidv4";
@@ -225,6 +225,14 @@ const MyContacts = (props) => {
         )}
       </div>
       {renderContacts(contacts)}
+      <button
+        className="w-full bg-white-600 border-2 mt-auto border-green-500 text-green-500 rounded-lg px-3 py-3 font-semibol"
+        onClick={() => {
+          logoutWrapper();
+        }}
+      >
+        logout
+      </button>
     </div>
   );
 };

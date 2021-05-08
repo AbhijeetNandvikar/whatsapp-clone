@@ -14,7 +14,7 @@ export const UserContext = (props) => {
   };
   const reject = () => {
     setAuth(null);
-    // redirect("login");
+    redirect("/login");
   };
   const resolve = (data) => {
     console.log(data);
@@ -48,7 +48,7 @@ export const UserContext = (props) => {
         }
       });
 
-    // redirect("/feed");
+    redirect("/");
   };
   console.log(auth);
   React.useEffect(() => {
