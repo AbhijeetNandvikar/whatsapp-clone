@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { logoutWrapper } from "../firebase";
 import ActiveChats from "./ActiveChats";
 import MyContacts from "./MyContacts";
 import MyProfile from "./MyProfile";
@@ -21,7 +22,7 @@ const ContactsArea = (props) => {
     }
   };
   return (
-    <div className="lg:w-4/12 h-full bg-white border border-gray-200">
+    <div className="lg:w-4/12 h-full bg-white border border-gray-200 flex flex-col pb-4">
       <div className="bg-gray-100 flex w-full py-3 px-4 items-center">
         <img
           className="w-10 h-10 rounded-full mr-auto"
@@ -38,6 +39,14 @@ const ContactsArea = (props) => {
         </div>
       </div>
       {renderCurrentPage(currentPage)}
+      <button
+        className="mx-4 bg-white-600 border-2 mt-auto border-green-500 text-green-500 rounded-lg px-3 py-3 font-semibold"
+        onClick={() => {
+          logoutWrapper();
+        }}
+      >
+        logout
+      </button>
     </div>
   );
 };

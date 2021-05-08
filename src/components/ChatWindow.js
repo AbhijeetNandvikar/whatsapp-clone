@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { firebaseStorageRef, fireStoreRef } from "../firebase";
 import profilePlaceholder from "../images/profilePlaceholder.png";
 import fileInputSvg from "../images/fileInput.svg";
@@ -6,6 +6,9 @@ const ChatWindow = (props) => {
   const [chatData, setChatData] = useState(null);
   const [text, setText] = useState("");
   const [showProfile, setShowProfile] = useState(false);
+  const chatWindow = useRef();
+  const chatEnd = useRef();
+
   useEffect(() => {
     if (props.currentChat !== null) {
       // setting up the listner
@@ -19,6 +22,10 @@ const ChatWindow = (props) => {
       setChatData(null);
     }
   }, [props]);
+
+  // useEffect(() => {
+  //   chatWindow.current.scrollIntoView({ behavior: "smooth" });
+  // }, [chatData]);
 
   const renderMyText = (content, time) => {
     return (
@@ -49,7 +56,7 @@ const ChatWindow = (props) => {
     if (data?.length > 0) {
       return data?.map((msg, index) => {
         let time = new Date(msg.timeStamp).toLocaleString("en-US");
-        let self = msg.authorId === props.auth.uid;
+        let self = msg.authorId === props.auth?.uid;
         return renderMessage(msg, self);
       });
     } else {
@@ -70,7 +77,7 @@ const ChatWindow = (props) => {
           messages: [
             ...chatData.messages,
             {
-              authorId: props.auth.uid,
+              authorId: props.auth?.uid,
               type: "text",
               content: text,
               timeStamp: Date.now(),
@@ -83,8 +90,11 @@ const ChatWindow = (props) => {
     }
   };
 
+  // useEffect(() => {
+  //   msgBottom?.current?.scrollIntoView({ behavior: "smooth" });
+  // }, [chatData]);
+
   const renderMessage = (data, self) => {
-    console.log(data, self);
     if (self) {
       if (data.type === "image") {
         return (
@@ -110,10 +120,7 @@ const ChatWindow = (props) => {
       if (data.type === "image") {
         return (
           <div className="flex  mb-2">
-            <div
-              className="rounded py-2 px-3 pl-4"
-              style={{ backgroundColor: "#E2F7CB" }}
-            >
+            <div className="rounded py-2 px-3 pl-4 bg-white">
               <img className="rounded lg:w-96 h-auto" src={data.content} />
               <p className="text-right text-xs text-gray-600 mt-1">
                 {new Date(data.timeStamp).toLocaleString()}
@@ -135,7 +142,6 @@ const ChatWindow = (props) => {
       var reader = new FileReader();
       reader.readAsDataURL(files[0]); // convert to base64 string
       reader.onload = (e) => {
-        console.log(e.target.result);
         fetch(e.target.result)
           .then((res) => res.blob())
           .then((blob) => {
@@ -151,7 +157,7 @@ const ChatWindow = (props) => {
                       messages: [
                         ...chatData.messages,
                         {
-                          authorId: props.auth.uid,
+                          authorId: props.auth?.uid,
                           type: files[0].type.split("/")[0],
                           content: res,
                           timeStamp: Date.now(),
@@ -192,15 +198,15 @@ const ChatWindow = (props) => {
               height: "100%",
               overflowY: "scroll",
             }}
+            ref={chatWindow}
           >
-            {renderChats(chatData?.messages)}
+            <div className="h-full">{renderChats(chatData?.messages)}</div>
           </div>
           <div className="bg-white w-full h-16 flex items-center py-2 px-2">
             <input
               type="file"
               id="chatFileInput"
               onChange={(e) => {
-                console.log(e.target.files);
                 uploadFiles(e.target.files);
               }}
               className="hidden"
@@ -282,10 +288,7 @@ const ChatWindow = (props) => {
             </li>
             <li>4. Click on Add button</li>
             <li>5. Click on contacts list to start messaging</li>
-            <li>
-              6. Here are some of test emails => test@test.com,
-              drake07martinez@gmail.com
-            </li>
+            <li>6. Here is test email : test@test.com, password : 123456789</li>
           </ul>
         </div>
       )}
