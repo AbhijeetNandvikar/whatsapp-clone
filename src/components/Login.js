@@ -96,7 +96,7 @@ const Login = (props) => {
                   </button>
                 </div>
               </div>
-              <div class="flex -mx-3">
+              {/* <div class="flex -mx-3">
                 <div class="w-full px-3 mb-5">
                   <button
                     onClick={() => {
@@ -107,7 +107,7 @@ const Login = (props) => {
                     logout
                   </button>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
