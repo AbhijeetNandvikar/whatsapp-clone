@@ -47,7 +47,6 @@ const ChatWindow = (props) => {
   };
 
   const renderChats = (data) => {
-    console.log(data);
     if (data?.length > 0) {
       return data?.map((msg, index) => {
         let time = new Date(msg.timeStamp).toLocaleString("en-US");
@@ -67,23 +66,25 @@ const ChatWindow = (props) => {
   };
 
   const sendText = (text) => {
-    fireStoreRef()
-      .collection("chats")
-      .doc(props.currentChat.chatId)
-      .update({
-        messages: [
-          ...chatData.messages,
-          {
-            authorId: props.auth.uid,
-            type: "text",
-            content: text,
-            timeStamp: Date.now(),
-          },
-        ],
-      })
-      .then((res) => {
-        setText("");
-      });
+    if (text.length > 0) {
+      fireStoreRef()
+        .collection("chats")
+        .doc(props.currentChat.chatId)
+        .update({
+          messages: [
+            ...chatData.messages,
+            {
+              authorId: props.auth.uid,
+              type: "text",
+              content: text,
+              timeStamp: Date.now(),
+            },
+          ],
+        })
+        .then((res) => {
+          setText("");
+        });
+    }
   };
 
   return (
@@ -114,6 +115,11 @@ const ChatWindow = (props) => {
           placeholder="Enter your message"
           onChange={(e) => setText(e.target.value)}
           value={text}
+          onKeyPress={(e) => {
+            if (e.key === "Enter" && text.length > 0) {
+              sendText(text);
+            }
+          }}
         />
         <button
           className="px-3 bg-green-500 rounded h-full text-white ml-4"
@@ -135,6 +141,12 @@ const ChatWindow = (props) => {
                   Name
                 </label>
                 <div className="flex">{props.friendInfo.name}</div>
+              </div>
+              <div className="w-full px-3 mb-4">
+                <label for="" className="text-xs font-semibold px-1">
+                  Email
+                </label>
+                <div className="flex">{props.friendInfo.email}</div>
               </div>
               <div className="w-full px-3 mb-4">
                 <label for="" className="text-xs font-semibold px-1">
